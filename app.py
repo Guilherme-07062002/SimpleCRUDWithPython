@@ -7,6 +7,7 @@ arquivo_db = "bylearn.db"
 conexao = None
 sql_buscar_alunos = 'SELECT * FROM Aluno;'
 
+
 def exibirAlunos():
     print('Exibindo...')
     sleep(1)
@@ -20,12 +21,14 @@ def exibirAlunos():
     print(x)
     sleep(2)
 
+
 def addAlunos(nome, id):
     print('Adicionando...')
     sleep(1)
     sql_add_aluno = f'INSERT INTO Aluno(nome, id) VALUES("{nome}", "{id}")'
     cursor.execute(sql_add_aluno)
     sleep(2)
+
 
 def removeAluno(id):
     print('Removendo...')
@@ -34,18 +37,21 @@ def removeAluno(id):
     cursor.execute(sql_remover_alunos)
     sleep(2)
 
+
 try:
     conexao = sqlite3.connect(arquivo_db)
     cursor = conexao.cursor()
     print('-'*40)
     print("Deu certo! Estamos usando o sqlite na versão:", sqlite3.version)
     print('Seja bem vindo!')
-    cursor.execute('CREATE TABLE IF NOT EXISTS Aluno(nome INTEGER, id INTEGER);')
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS Aluno(nome INTEGER, id INTEGER);')
     opcao = ''
     print('-'*40)
     while opcao != 4:
-        opcao = int(input('Qual operação deseja realizar?\n1- Adcionar aluno\n2- Remover aluno\n3- Exibir alunos\n4- Sair\n> '))
-        if opcao == 1:    
+        opcao = int(input(
+            'Qual operação deseja realizar?\n1- Adcionar aluno\n2- Remover aluno\n3- Exibir alunos\n4- Sair\n> '))
+        if opcao == 1:
             print('-'*30)
             nome = input('Insira nome do aluno: ')
             id = input('Insira id do aluno: ')
@@ -70,7 +76,7 @@ try:
             print('-'*30)
 
 except sqlite3.Error as e:
-    print('Ops... Deu um erro: ',e)
+    print('Ops... Deu um erro: ', e)
 finally:
     if conexao:
         conexao.commit()
